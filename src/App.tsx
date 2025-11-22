@@ -2,6 +2,9 @@ import { useState, useRef, useEffect, useMemo, useCallback, memo } from "react";
 import "./App.css";
 import { CodeEditor } from "./components/CodeEditor";
 import { GridResizer } from "./components/GridResizer";
+import { Button } from "./components/ui/button";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
+import { cn } from "./lib/utils";
 
 const dispatchKeyboardEventToParentZoomState = () => `
   document.addEventListener('keydown', (e) => {
@@ -304,18 +307,14 @@ const Preview: React.FC<PreviewProps> = memo(
     }, [code, isDark, onIframeLoaded]);
 
     return (
-      <div style={{ width: "100%", height: "100%", position: "relative" }}>
+      <div className="relative w-full h-full">
         <iframe
           ref={iframeRef}
           title="Code Preview"
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            border: "none",
-            backgroundColor: isDark ? "#1a1a1a" : "white",
-          }}
+          className={cn(
+            "absolute inset-0 w-full h-full border-none",
+            isDark ? "bg-[#1a1a1a]" : "bg-white"
+          )}
           src={iframeSrcUrl}
           onLoad={handleIframeLoad}
           sandbox="allow-popups-to-escape-sandbox allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation allow-modals allow-same-origin"
@@ -351,9 +350,10 @@ function App() {
     }
   }, []);
 
-  // Persist dark mode to localStorage
+  // Persist dark mode to localStorage and toggle dark class on document
   useEffect(() => {
     localStorage.setItem("darkMode", String(isDark));
+    document.documentElement.classList.toggle("dark", isDark);
   }, [isDark]);
 
   // State for transpiled code
@@ -481,46 +481,45 @@ root.render(<HelloWorld />);`);
   }, []);
 
   return (
-    <div style={{ height: "100vh", display: "flex", flexDirection: "column" }}>
+    <div className="h-screen flex flex-col">
       {/* Controls */}
       <div
-        style={{
-          padding: "10px",
-          backgroundColor: isDark ? "#2d2d2d" : "#f5f5f5",
-          borderBottom: "1px solid #ccc",
-          display: "flex",
-          gap: "10px",
-          alignItems: "center",
-        }}
+        className={cn(
+          "p-3 border-b flex gap-3 items-center",
+          isDark
+            ? "bg-[#2d2d2d] border-gray-700"
+            : "bg-gray-100 border-gray-300"
+        )}
       >
-        <button onClick={() => setIsDark(!isDark)}>
+        <Button variant="outline" size="sm" onClick={() => setIsDark(!isDark)}>
           {isDark ? "☀️ Light" : "🌙 Dark"}
-        </button>
-        <button onClick={() => setDevtools(!devtools)}>
+        </Button>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setDevtools(!devtools)}
+        >
           {devtools ? "Hide DevTools" : "Show DevTools"}
-        </button>
-        <button onClick={handleReload}>🔄 Reload</button>
-        <span style={{ color: isDark ? "#fff" : "#333" }}>
+        </Button>
+        <Button variant="outline" size="sm" onClick={handleReload}>
+          🔄 Reload
+        </Button>
+        <span
+          className={cn(
+            "text-sm font-medium",
+            isDark ? "text-white" : "text-gray-800"
+          )}
+        >
           Code Playground with DevTools
         </span>
       </div>
 
       {/* Main Layout */}
-      <div
-        ref={containerRef}
-        style={{
-          display: "flex",
-          flex: 1,
-          overflow: "hidden",
-        }}
-      >
+      <div ref={containerRef} className="flex flex-1 overflow-hidden">
         {/* Left Panel - Code Editor */}
         <div
-          style={{
-            width: "var(--left-panel-width)",
-            height: "100%",
-            overflow: "hidden",
-          }}
+          className="h-full overflow-hidden"
+          style={{ width: "var(--left-panel-width)" }}
         >
           <CodeEditor
             value={code}
@@ -536,83 +535,48 @@ root.render(<HelloWorld />);`);
         {/* Right Panel - Preview & DevTools */}
         <div
           ref={rightPanelRef}
-          style={{
-            width: "calc(100% - var(--left-panel-width))",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            overflow: "hidden",
-          }}
+          className="h-full flex flex-col overflow-hidden"
+          style={{ width: "calc(100% - var(--left-panel-width))" }}
         >
           {/* Preview with Tabs */}
           <div
             ref={previewRef}
+            className="overflow-hidden flex flex-col"
             style={{
               height:
                 devtools && activeTab === "preview"
                   ? "var(--right-top-height)"
                   : "100%",
-              overflow: "hidden",
-              display: "flex",
-              flexDirection: "column",
             }}
           >
-            {/* Tab Headers */}
-            <div
-              style={{
-                display: "flex",
-                backgroundColor: isDark ? "#1e1e1e" : "#f0f0f0",
-                borderBottom: `1px solid ${isDark ? "#333" : "#ccc"}`,
-                height: "40px",
-              }}
+            {/* Tabs */}
+            <Tabs
+              value={activeTab}
+              onValueChange={(value) =>
+                setActiveTab(value as "preview" | "transpiled")
+              }
+              className="flex flex-col h-full"
             >
-              <button
-                onClick={() => setActiveTab("preview")}
-                style={{
-                  padding: "8px 16px",
-                  border: "none",
-                  backgroundColor:
-                    activeTab === "preview"
-                      ? isDark
-                        ? "#333"
-                        : "white"
-                      : "transparent",
-                  color: isDark ? "#fff" : "#333",
-                  cursor: "pointer",
-                  borderBottom:
-                    activeTab === "preview"
-                      ? `2px solid ${isDark ? "#007acc" : "#007acc"}`
-                      : "none",
-                }}
+              <TabsList
+                className={cn(
+                  "w-full justify-start rounded-none border-b h-10",
+                  isDark
+                    ? "bg-[#1e1e1e] border-gray-700"
+                    : "bg-gray-100 border-gray-300"
+                )}
               >
-                🌐 Preview
-              </button>
-              <button
-                onClick={() => setActiveTab("transpiled")}
-                style={{
-                  padding: "8px 16px",
-                  border: "none",
-                  backgroundColor:
-                    activeTab === "transpiled"
-                      ? isDark
-                        ? "#333"
-                        : "white"
-                      : "transparent",
-                  color: isDark ? "#fff" : "#333",
-                  cursor: "pointer",
-                  borderBottom:
-                    activeTab === "transpiled"
-                      ? `2px solid ${isDark ? "#007acc" : "#007acc"}`
-                      : "none",
-                }}
-              >
-                🔧 Transpiled
-              </button>
-            </div>
+                <TabsTrigger value="preview" className="gap-2">
+                  🌐 Preview
+                </TabsTrigger>
+                <TabsTrigger value="transpiled" className="gap-2">
+                  🔧 Transpiled
+                </TabsTrigger>
+              </TabsList>
 
-            {/* Tab Content */}
-            <div style={{ flex: 1, overflow: "hidden" }}>
-              {activeTab === "preview" ? (
+              <TabsContent
+                value="preview"
+                className="flex-1 overflow-hidden m-0"
+              >
                 <Preview
                   importMap={importMap}
                   code={code}
@@ -625,7 +589,12 @@ root.render(<HelloWorld />);`);
                     );
                   }}
                 />
-              ) : (
+              </TabsContent>
+
+              <TabsContent
+                value="transpiled"
+                className="flex-1 overflow-hidden m-0"
+              >
                 <CodeEditor
                   value={
                     transpiledCode || "// Transpiled code will appear here..."
@@ -635,8 +604,8 @@ root.render(<HelloWorld />);`);
                   isDark={isDark}
                   readOnly={true}
                 />
-              )}
-            </div>
+              </TabsContent>
+            </Tabs>
           </div>
 
           {/* Horizontal Resizer (only show if devtools is enabled AND preview tab is active) */}
@@ -651,10 +620,8 @@ root.render(<HelloWorld />);`);
           {devtools && activeTab === "preview" && (
             <div
               ref={devtoolsRef}
-              style={{
-                height: "calc(100% - var(--right-top-height))",
-                overflow: "hidden",
-              }}
+              className="overflow-hidden"
+              style={{ height: "calc(100% - var(--right-top-height))" }}
             >
               <DevToolsPanel isDark={isDark} />
             </div>
@@ -717,11 +684,7 @@ const DevToolsPanel: React.FC<{ isDark: boolean }> = memo(({ isDark }) => {
     <iframe
       ref={devtoolsIframeRef}
       title="DevTools"
-      style={{
-        width: "100%",
-        height: "100%",
-        border: "none",
-      }}
+      className="w-full h-full border-none"
       src={devtoolsSrc}
     />
   );
