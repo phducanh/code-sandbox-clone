@@ -17,7 +17,7 @@ jobs:
       - name: Install Dependencies
         run: bun install
       - name: Build Example
-        run: bun run build:pages
+        run: bun run build
       - name: Archive artifact
         shell: sh
         run: |
