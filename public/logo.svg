@@ -1,0 +1,103 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background Circle with Gradient -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGradient)"/>
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="bgGradient" x1="0" y1="0" x2="512" y2="512" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#667eea"/>
+      <stop offset="50%" stop-color="#764ba2"/>
+      <stop offset="100%" stop-color="#667eea"/>
+    </linearGradient>
+    
+    <linearGradient id="dragonBody" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    
+    <linearGradient id="dragonBelly" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fcd34d"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
+    </linearGradient>
+    
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="4" stdDeviation="8" flood-opacity="0.3"/>
+    </filter>
+  </defs>
+  
+  <!-- Cute Dragon -->
+  <g filter="url(#shadow)">
+    <!-- Tail -->
+    <path d="M 380 320 Q 420 340 430 380 Q 435 400 425 410 Q 415 420 405 410 L 395 395 Q 390 385 395 375 Q 400 365 390 360 L 370 340" 
+          fill="url(#dragonBody)" 
+          stroke="#8b5cf6" 
+          stroke-width="3"/>
+    
+    <!-- Body -->
+    <ellipse cx="280" cy="280" rx="100" ry="90" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="4"/>
+    
+    <!-- Belly -->
+    <ellipse cx="280" cy="300" rx="70" ry="60" fill="url(#dragonBelly)" opacity="0.9"/>
+    
+    <!-- Back Leg -->
+    <ellipse cx="320" cy="360" rx="25" ry="35" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="3"/>
+    <ellipse cx="320" cy="395" rx="30" ry="20" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="3"/>
+    
+    <!-- Front Leg -->
+    <ellipse cx="240" cy="360" rx="25" ry="35" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="3"/>
+    <ellipse cx="240" cy="395" rx="30" ry="20" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="3"/>
+    
+    <!-- Head -->
+    <ellipse cx="200" cy="220" rx="70" ry="65" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="4"/>
+    
+    <!-- Snout -->
+    <ellipse cx="150" cy="240" rx="35" ry="30" fill="url(#dragonBody)" stroke="#8b5cf6" stroke-width="3"/>
+    <ellipse cx="150" cy="245" rx="25" ry="20" fill="url(#dragonBelly)" opacity="0.8"/>
+    
+    <!-- Nostrils -->
+    <circle cx="140" cy="235" r="4" fill="#8b5cf6"/>
+    <circle cx="140" cy="250" r="4" fill="#8b5cf6"/>
+    
+    <!-- Eyes (big and cute) -->
+    <ellipse cx="185" cy="210" rx="18" ry="22" fill="white"/>
+    <ellipse cx="215" cy="210" rx="18" ry="22" fill="white"/>
+    <circle cx="187" cy="215" r="12" fill="#1e293b"/>
+    <circle cx="217" cy="215" r="12" fill="#1e293b"/>
+    <circle cx="190" cy="212" r="6" fill="white"/>
+    <circle cx="220" cy="212" r="6" fill="white"/>
+    
+    <!-- Cute blush -->
+    <ellipse cx="165" cy="230" rx="12" ry="8" fill="#f472b6" opacity="0.4"/>
+    <ellipse cx="235" cy="230" rx="12" ry="8" fill="#f472b6" opacity="0.4"/>
+    
+    <!-- Horns (small and cute) -->
+    <path d="M 180 170 L 175 145 Q 175 135 180 135 Q 185 135 185 145 L 180 170" 
+          fill="url(#dragonBelly)" 
+          stroke="#f59e0b" 
+          stroke-width="2"/>
+    <path d="M 220 170 L 225 145 Q 225 135 220 135 Q 215 135 215 145 L 220 170" 
+          fill="url(#dragonBelly)" 
+          stroke="#f59e0b" 
+          stroke-width="2"/>
+    
+    <!-- Wings -->
+    <ellipse cx="300" cy="240" rx="45" ry="60" fill="url(#dragonBody)" opacity="0.7" stroke="#8b5cf6" stroke-width="3" transform="rotate(-20 300 240)"/>
+    <ellipse cx="300" cy="240" rx="30" ry="45" fill="url(#dragonBelly)" opacity="0.5" transform="rotate(-20 300 240)"/>
+    
+    <!-- Spikes on back -->
+    <path d="M 260 200 L 255 180 L 265 200" fill="#c084fc"/>
+    <path d="M 280 195 L 275 175 L 285 195" fill="#c084fc"/>
+    <path d="M 300 195 L 295 175 L 305 195" fill="#c084fc"/>
+    <path d="M 320 200 L 315 180 L 325 200" fill="#c084fc"/>
+  </g>
+  
+  <!-- Sparkles around dragon -->
+  <g opacity="0.8">
+    <circle cx="120" cy="180" r="4" fill="#fbbf24"/>
+    <circle cx="380" cy="180" r="4" fill="#fbbf24"/>
+    <circle cx="140" cy="350" r="3" fill="#fbbf24"/>
+    <circle cx="400" cy="320" r="3" fill="#fbbf24"/>
+    <path d="M 100 240 L 105 245 L 100 250 L 95 245 Z" fill="#fbbf24"/>
+    <path d="M 420 260 L 425 265 L 420 270 L 415 265 Z" fill="#fbbf24"/>
+  </g>
+</svg>

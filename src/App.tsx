@@ -5,6 +5,7 @@ import { GridResizer } from "./components/GridResizer";
 import { Button } from "./components/ui/button";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "./components/ui/tabs";
 import { cn } from "./lib/utils";
+import { Logo } from "./components/Logo";
 
 const dispatchKeyboardEventToParentZoomState = () => `
   document.addEventListener('keydown', (e) => {
@@ -485,29 +486,58 @@ root.render(<HelloWorld />);`);
       {/* Controls */}
       <div
         className={cn(
-          "p-3 border-b flex gap-3 items-center",
+          "p-3 border-b flex gap-3 items-center animate-slide-down backdrop-blur-sm shadow-lg relative z-10 transition-all duration-500",
           isDark
-            ? "bg-[#2d2d2d] border-gray-700"
-            : "bg-gray-100 border-gray-300"
+            ? "bg-gradient-to-r from-slate-900/95 via-blue-950/95 to-slate-900/95 border-blue-900/50"
+            : "bg-gradient-to-r from-blue-50/95 via-indigo-50/95 to-blue-50/95 border-blue-200/50"
         )}
       >
-        <Button variant="outline" size="sm" onClick={() => setIsDark(!isDark)}>
+        <Logo size={32} className="animate-scale-in mr-1" />
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => setIsDark(!isDark)}
+          className={cn(
+            "animate-scale-in [animation-delay:100ms] hover:scale-105 transition-all duration-300 font-medium",
+            isDark
+              ? "bg-blue-500/10 hover:bg-blue-500/20 text-blue-300 border border-blue-500/30 hover:border-blue-400/50"
+              : "bg-blue-500/10 hover:bg-blue-500/20 text-blue-700 border border-blue-500/30 hover:border-blue-600/50"
+          )}
+        >
           {isDark ? "☀️ Light" : "🌙 Dark"}
         </Button>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
           onClick={() => setDevtools(!devtools)}
+          className={cn(
+            "animate-scale-in [animation-delay:200ms] hover:scale-105 transition-all duration-300 font-medium",
+            isDark
+              ? "bg-purple-500/10 hover:bg-purple-500/20 text-purple-300 border border-purple-500/30 hover:border-purple-400/50"
+              : "bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-700 border border-indigo-500/30 hover:border-indigo-600/50"
+          )}
         >
           {devtools ? "Hide DevTools" : "Show DevTools"}
         </Button>
-        <Button variant="outline" size="sm" onClick={handleReload}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={handleReload}
+          className={cn(
+            "animate-scale-in [animation-delay:300ms] hover:scale-105 transition-all duration-300 font-medium",
+            isDark
+              ? "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 hover:border-emerald-400/50"
+              : "bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-700 border border-emerald-500/30 hover:border-emerald-600/50"
+          )}
+        >
           🔄 Reload
         </Button>
         <span
           className={cn(
-            "text-sm font-medium",
-            isDark ? "text-white" : "text-gray-800"
+            "text-sm font-semibold animate-fade-in [animation-delay:400ms] bg-gradient-to-r bg-clip-text text-transparent transition-all duration-500",
+            isDark
+              ? "from-blue-400 via-purple-400 to-blue-400"
+              : "from-blue-600 via-indigo-600 to-blue-600"
           )}
         >
           Code Playground with DevTools
@@ -559,10 +589,10 @@ root.render(<HelloWorld />);`);
             >
               <TabsList
                 className={cn(
-                  "w-full justify-start rounded-none border-b h-10",
+                  "w-full justify-start rounded-none border-b h-10 transition-all duration-500",
                   isDark
-                    ? "bg-[#1e1e1e] border-gray-700"
-                    : "bg-gray-100 border-gray-300"
+                    ? "bg-slate-900/50 border-blue-900/30"
+                    : "bg-blue-50/50 border-blue-200/50"
                 )}
               >
                 <TabsTrigger value="preview" className="gap-2">
